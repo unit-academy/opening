@@ -1,0 +1,516 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Central de Respostas | UNIT Academy</title>
+    <meta name="description" content="Tire suas dúvidas sobre a formação UNIT. Metodologia, requisitos técnicos e acesso à plataforma.">
+
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <link rel="icon" type="image/png" href="assets/img/favicon.png">
+
+    <style>
+        /* --- VARIÁVEIS GLOBAIS (Mesmas da Home) --- */
+        :root {
+            --bg-dark: #0a0a0a;
+            --card-bg: #111118;
+            --primary: #7c3aed;
+            --neon-blue: #00d4ff;
+            --neon-green: #00ff9d;
+            --neon-orange: #ff9f43;
+            --text-main: #ffffff;
+            --text-muted: #a0a0b0;
+            --border: rgba(255, 255, 255, 0.08);
+        }
+
+        /* RESET E BASE */
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: "Poppins", sans-serif; }
+        
+        body {
+            background-color: var(--bg-dark);
+            color: var(--text-main);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* NAVBAR SIMPLES */
+        .nav-header {
+            display: flex; justify-content: space-between; align-items: center;
+            padding: 20px 5%; position: sticky; top: 0; z-index: 100;
+            background: rgba(10, 10, 10, 0.9); backdrop-filter: blur(10px);
+            border-bottom: 1px solid var(--border);
+        }
+
+        .nav-logo { font-weight: 800; font-size: 1.2rem; color: #fff; display: flex; align-items: center; gap: 10px; }
+        .nav-logo img { width: 30px; height: auto; }
+
+        .back-btn {
+            padding: 8px 20px;
+            background: transparent;
+            border: 1px solid var(--primary);
+            border-radius: 50px;
+            color: var(--primary);
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 0.9rem;
+            transition: 0.3s;
+        }
+        .back-btn:hover { background: var(--primary); color: #fff; box-shadow: 0 0 15px rgba(124, 58, 237, 0.4); }
+
+        /* CONTAINER CENTRAL */
+        .main-container { max-width: 900px; margin: 0 auto; padding: 60px 20px; }
+
+        /* HEADER DA PÁGINA */
+        .page-header { text-align: center; margin-bottom: 60px; }
+        .page-header h1 { font-size: clamp(2rem, 5vw, 3rem); font-weight: 800; margin-bottom: 10px; }
+        .page-header span { color: var(--neon-blue); }
+        .page-header p { color: var(--text-muted); font-size: 1.1rem; max-width: 600px; margin: 0 auto; }
+
+        /* INTRO BOX TÉCNICA */
+        .intro-box {
+            background: linear-gradient(145deg, #161622, #0d0d14);
+            border: 1px solid var(--border);
+            border-left: 4px solid var(--primary);
+            padding: 30px;
+            border-radius: 12px;
+            margin-bottom: 60px;
+        }
+        .intro-box h3 { color: #fff; margin-bottom: 15px; display: flex; align-items: center; gap: 10px; }
+        .intro-box p { font-size: 0.95rem; color: #ccc; margin-bottom: 15px; }
+        .intro-check { list-style: none; margin-top: 20px; display: grid; grid-template-columns: 1fr 1fr; gap: 15px; }
+        .intro-check li { display: flex; align-items: center; gap: 10px; color: #a0a0b0; font-size: 0.9rem; }
+        .intro-check i { color: var(--neon-green); }
+
+        /* FAQ SECTION */
+        .faq-section-title {
+            font-size: 1.2rem; color: var(--neon-orange); margin: 40px 0 20px; 
+            text-transform: uppercase; letter-spacing: 1px; font-weight: 700;
+            display: flex; align-items: center; gap: 10px;
+        }
+        .faq-section-title::after { content: ""; flex: 1; height: 1px; background: var(--border); }
+
+        /* ITEM FAQ */
+        .faq-item {
+            background: var(--card-bg);
+            border: 1px solid var(--border);
+            margin-bottom: 15px;
+            border-radius: 8px;
+            overflow: hidden;
+            transition: 0.3s;
+        }
+        .faq-item:hover { border-color: #333; }
+        .faq-item.active { border-color: var(--primary); background: #151520; }
+
+        .faq-question {
+            padding: 20px;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 1rem;
+            display: flex; justify-content: space-between; align-items: center;
+            color: #fff;
+        }
+        .faq-icon { transition: 0.3s; color: var(--primary); }
+        .faq-item.active .faq-icon { transform: rotate(180deg); color: var(--neon-blue); }
+
+        .faq-answer {
+            max-height: 0; overflow: hidden; transition: 0.4s ease;
+            padding: 0 20px; color: var(--text-muted); font-size: 0.95rem; line-height: 1.7;
+        }
+        .faq-item.active .faq-answer { padding-bottom: 20px; max-height: 500px; }
+
+/* ==================================================================
+   FOOTER PADRONIZADO (Extraído da Index)
+================================================================== */
+
+.site-footer {
+    /* Garante compatibilidade mesmo se a variável não existir no FAQ */
+    background-color: var(--footer-bg, #02020a); 
+    border-top: 1px solid var(--footer-border, rgba(255,255,255,0.05));
+    border-radius: 20px 20px 0 0;
+    padding: 60px 20px 30px;
+}
+
+.footer-container {
+    max-width: 1100px;
+    margin: 0 auto;
+}
+
+.footer-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 40px;
+    margin-bottom: 50px;
+}
+
+.footer-col h4 {
+    color: #fff;
+    margin-bottom: 20px;
+    font-size: 1rem;
+    font-weight: 600;
+}
+
+.footer-col p {
+    color: #8888a0;
+    font-size: 0.9rem;
+    line-height: 1.6;
+}
+
+/* --- LOGO E IDENTIDADE --- */
+.brand-wrapper {
+    display: flex;
+    align-items: center;
+    gap: 15px; /* Importante para separar logo do texto */
+    margin-bottom: 15px;
+}
+
+.footer-img {
+    width: 45px;
+    height: auto;
+    object-fit: contain;
+    filter: drop-shadow(0 0 5px rgba(124, 58, 237, 0.6));
+}
+
+.footer-logo {
+    font-weight: 800;
+    font-size: 1.5rem;
+    color: #fff;
+    margin-bottom: 0;
+    line-height: 1;
+}
+
+/* --- LINKS COM PONTOS DECORATIVOS --- */
+.footer-links {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.footer-links li {
+    list-style: none;
+}
+
+.footer-links a {
+    color: #8888a0;
+    font-size: 0.9rem;
+    position: relative;
+    transition: 0.3s;
+    display: flex;
+    align-items: center; /* Alinha o ponto verticalmente */
+    text-decoration: none; 
+}
+
+/* O Ponto (.) antes do link */
+.footer-links a::before {
+    content: ''; 
+    display: inline-block;
+    width: 6px;
+    height: 6px;
+    background-color: rgba(124, 58, 237, 0.5); /* Roxo discreto */
+    border-radius: 50%;
+    margin-right: 10px;
+    transition: 0.3s;
+    
+}
+
+/* Hover: Texto e Ponto brilham */
+.footer-links a:hover {
+    color: #7c3aed; /* var(--primary) hardcoded para segurança */
+    transform: translateX(5px);
+}
+
+.footer-links a:hover::before {
+    background-color: #00d4ff; /* var(--neon-blue) hardcoded */
+    box-shadow: 0 0 8px #00d4ff;
+}
+
+/* --- REDES SOCIAIS --- */
+.social-row {
+    display: flex;
+    gap: 15px;
+    margin-bottom: 20px;
+    
+}
+
+.social-btn {
+    width: 40px;
+    height: 40px;
+    background: rgba(255,255,255,0.05);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    color: #fff;
+    transition: 0.3s;
+    text-decoration: none; 
+}
+
+.social-btn:hover {
+    background: #7c3aed;
+    transform: scale(1.1);
+}
+
+.footer-address {
+    color: #8888a0;
+    font-size: 0.85rem;
+}
+
+/* --- BARRA FINAL --- */
+.footer-bottom {
+    border-top: 1px solid rgba(255,255,255,0.05);
+    padding-top: 30px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: center;
+    gap: 20px;
+    color: #8888a0;
+    font-size: 0.8rem;
+}
+
+.legal-links {
+    display: flex;
+    gap: 20px;
+    flex-wrap: wrap;
+}
+
+.legal-links a:hover {
+    color: #7c3aed;
+}
+
+/* --- RESPONSIVIDADE MOBILE --- */
+@media (max-width: 768px) {
+    .footer-grid { grid-template-columns: 1fr; }
+    
+    .footer-bottom {
+        flex-direction: column;
+        text-align: center;
+    }
+    
+    .legal-links {
+        justify-content: center;
+    }
+}
+    </style>
+</head>
+<body>
+
+    <!-- NAVEGAÇÃO SUPERIOR -->
+    <nav class="nav-header">
+        <div class="nav-logo">
+            <img src="assets/img/1logo.png" alt="UNIT Logo">
+            UNIT FAQ
+        </div>
+        <a href="#" onclick="history.back(); return false;" class="back-btn">
+            <i class="fa-solid fa-arrow-left"></i> Voltar
+        </a>
+    </nav>
+
+    <div class="main-container">
+
+        <!-- CABEÇALHO -->
+        <header class="page-header">
+            <h1>Central de <span>Respostas</span></h1>
+            <p>Tire suas dúvidas técnicas, entenda a metodologia IA-First e saiba como a UNIT transforma iniciantes em Arquitetos de Soluções.</p>
+        </header>
+
+        <!-- BOX DE INTRODUÇÃO -->
+        <div class="intro-box">
+            <h3><i class="fa-solid fa-rocket"></i> Antes de começar:</h3>
+            <p>
+                A UNIT Academy não é apenas um curso de programação tradicional. Nós focamos na **Arquitetura de Soluções**. 
+                Isso significa que você não perde meses decorando sintaxe de código que muda todo ano. 
+                Aqui, você aprende a **comandar a IA** para gerar o código, enquanto você foca na estratégia, no produto e na venda.
+            </p>
+            <ul class="intro-check">
+                <li><i class="fa-solid fa-check-circle"></i> Foco em Produto Final e Venda</li>
+                <li><i class="fa-solid fa-check-circle"></i> IA como "Funcionário" Técnico</li>
+                <li><i class="fa-solid fa-check-circle"></i> Linguagens Modernas</li>
+                <li><i class="fa-solid fa-check-circle"></i> Automação de Processos Reais</li>
+            </ul>
+        </div>
+
+        <!-- GRUPO 1: METODOLOGIA -->
+        <h2 class="faq-section-title"><i class="fa-solid fa-brain"></i> Metodologia & Aprendizado</h2>
+
+        <div class="faq-item">
+            <div class="faq-question">Eu não sei nada de programação. Consigo acompanhar? <i class="fa-solid fa-chevron-down faq-icon"></i></div>
+            <div class="faq-answer">
+                <p>Sim. É exatamente para você que a metodologia foi desenhada. No modelo antigo, você levava 6 meses para aprender a centralizar um botão. Com a metodologia IA-First, a Inteligência Artificial escreve o código pesado.</p>
+                <p style="margin-top: 10px;">Na UNIT, nós ensinamos você a entender o código, a lógica e estruturar as pastas. O "trabalho braçal" de digitação fica por conta da máquina. Isso nivela o jogo entre iniciantes e seniores.</p>
+            </div>
+        </div>
+
+        <div class="faq-item">
+            <div class="faq-question">A IA vai substituir os programadores? <i class="fa-solid fa-chevron-down faq-icon"></i></div>
+            <div class="faq-answer">
+                <p><strong>Não. A IA não substitui o programador, ela impulsiona a execução.</strong></p>
+                
+                <p style="margin-top: 10px;">
+                    O que vai deixar de existir é o "digitador de código". 
+                    O mercado agora busca o <strong>Arquiteto de Soluções</strong> — o profissional que sabe descrever, corrigir e conectar as peças.
+                </p>
+                
+                <p style="margin-top: 10px;">
+                    Aprender IA hoje é como aprender a usar a Internet nos anos 90. Você deixa de ser um operário do código para se tornar o maestro da tecnologia.
+                </p>
+            </div>
+        </div>
+
+        <div class="faq-item">
+            <div class="faq-question">Quais ferramentas vou aprender a usar? <i class="fa-solid fa-chevron-down faq-icon"></i></div>
+            <div class="faq-answer">
+                <p>Nós não focamos em ferramentas específicas que podem se tornar obsoletas, mas sim nos <strong>fundamentos tecnológicos</strong> para construir soluções.</p>
+                <p style="margin-top: 10px;">Você dominará as categorias essenciais do mercado:</p>
+                <ul style="margin-left: 20px; margin-top: 10px;">
+                    <li><strong>LLMs de Engenharia:</strong> Modelos de IA focados em lógica e escrita de código.</li>
+                    <li><strong>Ambientes de Desenvolvimento:</strong> Estruturação de projetos, pastas e servidores.</li>
+                    <li><strong>Protocolos de Integração:</strong> APIs, Webhooks e conexão entre sistemas (Back-end).</li>
+                    <li><strong>IA Generativa:</strong> Síntese de imagens, vídeos e interfaces para produtos digitais.</li>
+                </ul>
+                <p style="margin-top: 10px; font-size: 0.85rem; color: var(--neon-blue);">*Utilizamos as ferramentas líderes do mercado em cada aula, mas o objetivo é que você tenha autonomia para operar qualquer tecnologia nova que surja.</p>
+            </div>
+        </div>
+
+        <!-- GRUPO 2: TÉCNICO & REQUISITOS -->
+        <h2 class="faq-section-title"><i class="fa-solid fa-microchip"></i> Técnico & Requisitos</h2>
+
+        <div class="faq-item">
+            <div class="faq-question">Preciso de um computador gamer potente? <i class="fa-solid fa-chevron-down faq-icon"></i></div>
+            <div class="faq-answer">
+                <p>Não. A maior parte do processamento de IA (geração de imagens e códigos) acontece na nuvem (nos servidores da OpenAI ou Google). Você precisa apenas de um computador (Windows, Mac ou Linux) com acesso à internet e capacidade para rodar um navegador e o VS Code (que é leve).</p>
+            </div>
+        </div>
+
+        <div class="faq-item">
+            <div class="faq-question">Consigo fazer tudo pelo celular? <i class="fa-solid fa-chevron-down faq-icon"></i></div>
+            <div class="faq-answer">
+                <p>Você pode assistir às aulas pelo celular, mas para desenvolver sistemas, criar sites e configurar automações, <strong>um computador ou notebook é essencial</strong>. Não recomendamos tentar programar profissionalmente apenas com um smartphone.</p>
+            </div>
+        </div>
+
+        <!-- GRUPO 3: ACESSO & FINANCEIRO -->
+        <h2 class="faq-section-title"><i class="fa-solid fa-unlock-keyhole"></i> Acesso & Garantia</h2>
+
+        <div class="faq-item">
+            <div class="faq-question">O acesso é vitalício ou mensalidade? <i class="fa-solid fa-chevron-down faq-icon"></i></div>
+            <div class="faq-answer">
+                <p>Ao adquirir o treinamento, o acesso é <strong>VITALÍCIO</strong>. Você paga uma vez e o conteúdo é seu para sempre.</p>
+                <p style="margin-top: 10px;">Diferente de assinaturas que te bloqueiam se parar de pagar, aqui você estuda no seu ritmo. Acesso sempre que houver atualizações relevantes e melhorias do método também estão inclusas, sem cobranças surpresas.</p>
+            </div>
+        </div>
+
+        <div class="faq-item">
+            <div class="faq-question">E se eu não gostar? Tem garantia? <i class="fa-solid fa-chevron-down faq-icon"></i></div>
+            <div class="faq-answer">
+                <p>Sim. Confiamos tanto no método que oferecemos <strong>7 dias de garantia incondicional</strong>. Se você entrar, assistir às aulas e achar que não é para você, basta apertar um botão na plataforma da Kiwify e seu dinheiro é devolvido integralmente. Sem perguntas, sem letras miúdas.</p>
+            </div>
+        </div>
+
+        <div class="faq-item">
+            <div class="faq-question">Como recebo o acesso? <i class="fa-solid fa-chevron-down faq-icon"></i></div>
+            <div class="faq-answer">
+                <p>Imediatamente após a aprovação do pagamento. Você receberá um e-mail da plataforma Kiwify com seu login e senha exclusivos para acessar a área de membros da UNIT.</p>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- FOOTER PADRONIZADO (INDEX + FAQ) -->
+    <footer class="site-footer">
+        <div class="footer-container">
+            
+            <!-- GRID PRINCIPAL -->
+            <div class="footer-grid">
+                
+            <!-- 1. MARCA & IDENTIDADE -->
+                <div class="footer-col brand-col">
+                    <div class="brand-wrapper">
+                        <img src="assets/img/1logo.png" alt="UNIT Logo" class="footer-img">
+                        <div class="footer-logo">UNIT</div>
+                    </div>
+                    <p>
+                        A UNIT é uma organização focada em educação tecnológica e Inteligência Artificial.
+                        Atuamos na formação técnica aplicada e em consultoria estratégica para automação, arquitetura de soluções e escala de negócios.
+                    </p>
+                </div>
+
+                <!-- 2. INSTITUCIONAL -->
+                <div class="footer-col">
+                    <h4>Institucional</h4>
+                    <ul class="footer-links">
+                        <li><a href="index.html#sobre">UNIT</a></li>
+                        <li><a href="pulsem.html">Manifesto & Visão</a></li>
+                        <li><a href="bio.html">Founder & Tech Lead</a></li>
+                        <li><a href="unit_faq.html">Dúvidas Frequentes</a></li>
+                    </ul>
+                </div>
+
+                <!-- 3. SOLUÇÕES (Links da Index) -->
+                <div class="footer-col">
+                    <h4>Soluções</h4>
+                    <ul class="footer-links">
+                        <li><a href="treinamentos.html#treinamentos">Treinamentos</a></li>
+                        <li><a href="treinamentos.html#IAcriativa">IA Criativa & Design</a></li>
+                        <li><a href="treinamentos.html#bots">Automação & Bots</a></li>
+                        <li><a href="treinamentos.html#Full-Stack">Web Full Stack</a></li>
+                        <li><a href="treinamentos.html#apps">Apps Mobile</a></li>
+                    </ul>
+                </div>
+
+                    <!-- 4. CONECTE-SE -->
+                <div class="footer-col">
+                    <h4>Conecte-se</h4>
+                    <div class="social-row">
+                        <!-- WhatsApp -->
+                        <a href="https://wa.me/5521996442487" target="_blank" class="social-btn"><i class="fab fa-whatsapp"></i></a>
+                        <!-- Instagram -->
+                        <a href="https://www.instagram.com/gustavo_capichoni8" target="_blank" class="social-btn"><i class="fab fa-instagram"></i></a>
+                        <!-- YouTube -->
+                        <a href="https://www.youtube.com/@gustavo_capichoni" target="_blank" class="social-btn"><i class="fab fa-youtube"></i></a>
+                        <!-- TikTok -->
+                        <a href="https://www.tiktok.com/@gustavo_kali_" target="_blank" class="social-btn"><i class="fab fa-tiktok"></i></a>
+                    </div>
+                    <p class="footer-address">
+                        Rio de Janeiro, Brasil<br>
+                        Atendimento Global
+                    </p>
+                </div>
+            </div>
+
+            <!-- BARRA FINAL -->
+            <div class="footer-bottom">
+                <p>&copy; 2025 UNIT Academy. Engenharia de Sistemas & Arquitetura de Soluções com IA.</p>
+                
+                <div class="legal-links">
+                    <a href="termos-e-acordos/termos-de-uso.html" style="color: #8888a0; text-decoration: none;">Termos de Uso</a>
+                    <a href="termos-e-acordos/politica-de-privacidade.html" style="color: #8888a0; text-decoration: none;">Política de Privacidade</a>
+                    <a href="termos-e-acordos/acordo-de-servico.html" style="color: #8888a0; text-decoration: none;">Acordo de Serviço</a>
+                </div>
+
+            </div>
+        </div>
+    </footer>
+
+    <!-- SCRIPT DE INTERAÇÃO -->
+    <script>
+        const faqItems = document.querySelectorAll(".faq-item");
+
+        faqItems.forEach(item => {
+            item.querySelector(".faq-question").addEventListener("click", () => {
+                // Fecha os outros se quiser comportamento de "acordeão único"
+                // Se preferir que fiquem vários abertos, remova este bloco if/forEach
+                faqItems.forEach(otherItem => {
+                    if (otherItem !== item) {
+                        otherItem.classList.remove("active");
+                    }
+                });
+
+                // Alterna o estado do atual
+                item.classList.toggle("active");
+            });
+        });
+    </script>
+
+</body>
+</html>

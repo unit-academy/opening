@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Política de Privacidade - UNIT Academy</title>
+    <style>
+        :root {
+            --bg-dark: #0d0d1e;
+            --card-bg: #151525;
+            --primary: #7c3aed;
+            --neon-blue: #00d4ff;
+            --neon-orange: #ff9f43;
+            --text-main: #ffffff;
+            --text-muted: #a0a0b0;
+            --border-color: #2a2a45;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Poppins', sans-serif; }
+        body { background-color: var(--bg-dark); color: var(--text-main); line-height: 1.6; padding: 20px; }
+        .container-legal {
+            max-width: 900px; margin: 40px auto; padding: 40px;
+            background-color: var(--card-bg); border: 1px solid var(--border-color);
+            border-radius: 15px; box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
+        }
+        h1 { color: var(--primary); font-size: 1.8rem; margin-bottom: 30px; text-align: center; border-bottom: 2px solid var(--border-color); padding-bottom: 20px; }
+        h2 { color: #fff; font-size: 1.3rem; margin-top: 30px; margin-bottom: 15px; border-left: 4px solid var(--primary); padding-left: 15px; }
+        p, li { font-size: 0.95rem; color: var(--text-muted); margin-bottom: 15px; text-align: justify; }
+        strong { color: #fff; }
+        .footer-legal {
+            text-align: center; margin-top: 60px; padding-top: 20px; border-top: 1px solid var(--border-color);
+            font-size: 0.75rem; color: #555;
+        }
+        /* BOTÃO VOLTAR FLUTUANTE */
+        .btn-back-fixed {
+            position: fixed;
+            top: 25px;
+            right: 30px;
+            background: rgba(124, 58, 237, 0.15); /* Roxo transparente */
+            color: #fff;
+            padding: 10px 25px;
+            border: 1px solid #7c3aed; /* Borda Roxa */
+            border-radius: 50px;
+            text-decoration: none;
+            font-size: 0.9rem;
+            font-weight: 600;
+            transition: 0.3s;
+            backdrop-filter: blur(5px);
+            z-index: 1000;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .btn-back-fixed:hover {
+            background: #7c3aed; /* Preenche de roxo ao passar o mouse */
+            box-shadow: 0 0 15px rgba(124, 58, 237, 0.5);
+            transform: translateX(-3px); /* Efeito sutil de movimento */
+        }
+
+        /* Ajuste para celular não ficar em cima do texto */
+        @media (max-width: 600px) {
+            .btn-back-fixed {
+                padding: 8px 15px;
+                font-size: 0.8rem;
+                right: 15px;
+            }
+        }
+        /* Container para agrupar os botões fixos */
+.header-fixed-actions {
+    position: fixed;
+    top: 25px;
+    right: 30px;
+    display: flex;
+    gap: 15px; /* Espaço entre os botões */
+    z-index: 1000;
+}
+
+/* Novo Estilo para o botão "Início" */
+.btn-home-fixed {
+    /* Herda o estilo base do btn-back-fixed */
+    background: rgba(0, 212, 255, 0.15); /* Neon Blue transparente, diferente do roxo */
+    color: #fff;
+    padding: 10px 25px;
+    border: 1px solid var(--neon-blue); /* Borda Neon Blue */
+    border-radius: 50px;
+    text-decoration: none;
+    font-size: 0.9rem;
+    font-weight: 600;
+    transition: 0.3s;
+    backdrop-filter: blur(5px);
+    z-index: 1000;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.btn-home-fixed:hover {
+    background: var(--neon-blue); /* Preenche de Neon Blue ao passar o mouse */
+    box-shadow: 0 0 15px rgba(0, 212, 255, 0.5);
+    transform: translateX(-3px);
+}
+
+/* Ajuste do botão existente para o novo agrupamento */
+.header-fixed-actions .btn-back-fixed {
+    position: static; /* Remove o 'fixed' individual para o botão, agora o container gerencia */
+    top: auto;
+    right: auto;
+}
+
+/* Ajuste para celular para o grupo de botões */
+@media (max-width: 600px) {
+    .header-fixed-actions {
+        flex-direction: column; /* Empilha os botões no celular */
+        align-items: flex-end; /* Alinha à direita */
+        top: 15px;
+        right: 15px;
+        gap: 10px; /* Menos espaço entre eles */
+    }
+    /* Adaptação para os botões dentro do container em mobile */
+    .header-fixed-actions .btn-back-fixed,
+    .header-fixed-actions .btn-home-fixed {
+        padding: 8px 15px;
+        font-size: 0.8rem;
+        width: fit-content; /* Ajusta a largura ao conteúdo */
+    }
+}
+    </style>
+</head>
+<body>
+<!-- Link do Ícone (Caso não tenha no head) -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+    <div class="header-fixed-actions">
+        <button onclick="history.back()" class="btn-back-fixed">
+            <i class="fa-solid fa-arrow-left"></i> Voltar
+        </button>
+        <a href="../index.html" class="btn-home-fixed">
+            <i class="fa-solid fa-house"></i> Início
+        </a>
+    </div>
+<div class="container-legal">
+
+<h1>POLÍTICA DE PRIVACIDADE E DADOS (LGPD)</h1>
+
+<p>A presente Política de Privacidade tem por finalidade demonstrar o compromisso da <strong>UNIT - Unidade de Integração Tecnológica</strong> com a privacidade e a proteção dos dados pessoais de seus alunos e visitantes, estabelecendo as regras sobre o tratamento de dados, de acordo com a Lei Geral de Proteção de Dados (Lei nº 13.709/2018 - LGPD).</p>
+
+<h2>1. QUEM SOMOS (CONTROLADOR)</h2>
+<p>
+O Controlador dos dados, responsável pelas decisões referentes ao tratamento de informações pessoais, é <strong>Gustavo Albert Ferreira Capichoni</strong>, atuando como produtor de conteúdo educacional independente.
+</p>
+
+<h2>2. QUAIS DADOS COLETAMOS</h2>
+<p>
+A UNIT Academy coleta o mínimo necessário de dados para a prestação do serviço educacional:
+</p>
+<ul>
+    <li><strong>Dados de Identificação:</strong> Nome completo, e-mail e telefone (fornecidos via Kiwify).</li>
+    <li><strong>Dados Financeiros:</strong> A UNIT <strong>não</strong> tem acesso aos seus dados bancários ou de cartão de crédito. Essas informações são processadas exclusivamente pela Kiwify em ambiente criptografado.</li>
+    <li><strong>Dados de Navegação:</strong> Cookies padrão para funcionamento do site e métricas de acesso anônimas.</li>
+</ul>
+
+<h2>3. FINALIDADE DO TRATAMENTO</h2>
+<p>
+Os dados coletados são utilizados para:
+</p>
+<ul>
+    <li>Liberar seu acesso à área de membros e aos Treinamentos contratados.</li>
+    <li>Enviar comunicações importantes sobre atualizações dos treinamentos (Service Transactional Emails).</li>
+    <li>Emitir certificados de conclusão.</li>
+    <li>Cumprir obrigações legais e fiscais.</li>
+</ul>
+
+<h2>4. COMPARTILHAMENTO DE DADOS</h2>
+<p>
+Seus dados não são vendidos ou cedidos para terceiros para fins de marketing. O compartilhamento ocorre apenas com:
+</p>
+<ul>
+    <li><strong>Kiwify:</strong> Plataforma que processa os pagamentos e gerencia a área de membros.</li>
+    <li><strong>Órgãos Públicos:</strong> Apenas quando exigido por lei ou ordem judicial.</li>
+</ul>
+
+<h2>5. SEUS DIREITOS (TITULAR DOS DADOS)</h2>
+<p>
+Conforme a LGPD, você tem direito a:
+</p>
+<ul>
+    <li>Confirmar a existência de tratamento de dados.</li>
+    <li>Acessar seus dados.</li>
+    <li>Corrigir dados incompletos ou desatualizados.</li>
+    <li>Solicitar a eliminação dos dados (respeitando o prazo legal de guarda obrigatória para fins fiscais).</li>
+</ul>
+
+<h2>6. CONTATO (ENCARREGADO DE DADOS)</h2>
+<p>
+Para exercer seus direitos, solicitar exclusão de dados ou tirar dúvidas sobre esta política, entre em contato através do nosso canal oficial:<br>
+<strong>E-mail de Suporte:</strong> unitacademy8@gmail.com<br>
+<strong>Horário de Atendimento:</strong> Segunda a Sexta, das 09h às 18h.
+</p>
+
+<h2>7. ATUALIZAÇÕES</h2>
+<p>
+Esta política pode ser alterada a qualquer momento. A versão mais recente sempre estará disponível nesta página.<br>
+<strong>Última atualização:</strong> 02 de Janeiro de 2026.
+</p>
+
+<div class="legal-docs-footer-nav">
+    <p>Documentos Legais da UNIT Academy:</p>
+    <ul>
+        <li><a href="acordo-de-servico.html">Acordo Educacional</a></li>
+        <li><a href="politica-de-privacidade.html">Política de Privacidade</a></li>
+        <li><a href="termos-de-uso.html">Termos de Uso</a></li>
+    </ul>
+</div>
+<div class="footer-legal">
+    UNIT - Unidade de Integração Tecnológica.<br>
+    Responsável Técnico: Gustavo Albert Ferreira Capichoni.<br>
+    Pagamentos e dados transacionais processados via Kiwify.
+</div>
+
+<style>
+    /* Estilo para a navegação entre documentos no footer */
+    .legal-docs-footer-nav {
+        margin-top: 40px;
+        padding-top: 20px;
+        border-top: 1px dashed var(--border-color); /* Linha tracejada para separar do conteúdo */
+        text-align: center;
+    }
+    .legal-docs-footer-nav p {
+        font-size: 0.85rem;
+        color: var(--text-muted);
+        margin-bottom: 10px;
+    }
+    .legal-docs-footer-nav ul {
+        list-style: none;
+        padding: 0;
+        display: flex;
+        justify-content: center;
+        gap: 20px; /* Espaço entre os links */
+        margin-bottom: 20px;
+    }
+    .legal-docs-footer-nav li a {
+        color: var(--primary); /* Cor principal (roxo) para os links */
+        text-decoration: none;
+        font-weight: 500;
+        font-size: 0.9rem;
+        transition: color 0.3s ease;
+    }
+    .legal-docs-footer-nav li a:hover {
+        color: var(--neon-blue); /* Cor neon azul ao passar o mouse */
+        text-decoration: underline;
+    }
+</style>
+
+</div>
+</body>
+</html>

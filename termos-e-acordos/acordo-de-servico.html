@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Acordo Educacional - UNIT Academy</title>
+    <style>
+        :root {
+            --bg-dark: #0d0d1e;
+            --card-bg: #151525;
+            --primary: #7c3aed;
+            --neon-blue: #00d4ff;
+            --neon-orange: #ff9f43;
+            --text-main: #ffffff;
+            --text-muted: #a0a0b0;
+            --border-color: #2a2a45;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Poppins', sans-serif; }
+        body { background-color: var(--bg-dark); color: var(--text-main); line-height: 1.6; padding: 20px; }
+        .container-legal {
+            max-width: 900px; margin: 40px auto; padding: 40px;
+            background-color: var(--card-bg); border: 1px solid var(--border-color);
+            border-radius: 15px; box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
+        }
+        h1 { color: var(--neon-orange); font-size: 1.8rem; margin-bottom: 30px; text-align: center; border-bottom: 2px solid var(--border-color); padding-bottom: 20px; }
+        h2 { color: #fff; font-size: 1.3rem; margin-top: 30px; margin-bottom: 15px; border-left: 4px solid var(--neon-orange); padding-left: 15px; }
+        p, li { font-size: 0.95rem; color: var(--text-muted); margin-bottom: 15px; text-align: justify; }
+        .warning-box {
+            background: rgba(255, 159, 67, 0.1); border: 1px solid var(--neon-orange);
+            color: #ffcc80; padding: 20px; border-radius: 10px; margin: 30px 0;
+        }
+        .signature-area { margin-top: 50px; text-align: center; border-top: 1px dashed var(--border-color); padding-top: 30px; }
+        .footer-legal {
+            text-align: center; margin-top: 60px; padding-top: 20px; border-top: 1px solid var(--border-color);
+            font-size: 0.75rem; color: #555;
+        }
+        /* BOTÃO VOLTAR FLUTUANTE */
+        .btn-back-fixed {
+            position: fixed;
+            top: 25px;
+            right: 30px;
+            background: rgba(124, 58, 237, 0.15); /* Roxo transparente */
+            color: #fff;
+            padding: 10px 25px;
+            border: 1px solid #7c3aed; /* Borda Roxa */
+            border-radius: 50px;
+            text-decoration: none;
+            font-size: 0.9rem;
+            font-weight: 600;
+            transition: 0.3s;
+            backdrop-filter: blur(5px);
+            z-index: 1000;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .btn-back-fixed:hover {
+            background: #7c3aed; /* Preenche de roxo ao passar o mouse */
+            box-shadow: 0 0 15px rgba(124, 58, 237, 0.5);
+            transform: translateX(-3px); /* Efeito sutil de movimento */
+        }
+
+        /* Ajuste para celular não ficar em cima do texto */
+        @media (max-width: 600px) {
+            .btn-back-fixed {
+                padding: 8px 15px;
+                font-size: 0.8rem;
+                right: 15px;
+            }
+        }
+        /* Container para agrupar os botões fixos */
+.header-fixed-actions {
+    position: fixed;
+    top: 25px;
+    right: 30px;
+    display: flex;
+    gap: 15px; /* Espaço entre os botões */
+    z-index: 1000;
+}
+
+/* Novo Estilo para o botão "Início" */
+.btn-home-fixed {
+    /* Herda o estilo base do btn-back-fixed */
+    background: rgba(0, 212, 255, 0.15); /* Neon Blue transparente, diferente do roxo */
+    color: #fff;
+    padding: 10px 25px;
+    border: 1px solid var(--neon-blue); /* Borda Neon Blue */
+    border-radius: 50px;
+    text-decoration: none;
+    font-size: 0.9rem;
+    font-weight: 600;
+    transition: 0.3s;
+    backdrop-filter: blur(5px);
+    z-index: 1000;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.btn-home-fixed:hover {
+    background: var(--neon-blue); /* Preenche de Neon Blue ao passar o mouse */
+    box-shadow: 0 0 15px rgba(0, 212, 255, 0.5);
+    transform: translateX(-3px);
+}
+
+/* Ajuste do botão existente para o novo agrupamento */
+.header-fixed-actions .btn-back-fixed {
+    position: static; /* Remove o 'fixed' individual para o botão, agora o container gerencia */
+    top: auto;
+    right: auto;
+}
+
+/* Ajuste para celular para o grupo de botões */
+@media (max-width: 600px) {
+    .header-fixed-actions {
+        flex-direction: column; /* Empilha os botões no celular */
+        align-items: flex-end; /* Alinha à direita */
+        top: 15px;
+        right: 15px;
+        gap: 10px; /* Menos espaço entre eles */
+    }
+    /* Adaptação para os botões dentro do container em mobile */
+    .header-fixed-actions .btn-back-fixed,
+    .header-fixed-actions .btn-home-fixed {
+        padding: 8px 15px;
+        font-size: 0.8rem;
+        width: fit-content; /* Ajusta a largura ao conteúdo */
+    }
+}
+    </style>
+</head>
+<body>
+        <!-- Link do Ícone (Caso não tenha no head) -->
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+    <div class="header-fixed-actions">
+        <button onclick="history.back()" class="btn-back-fixed">
+            <i class="fa-solid fa-arrow-left"></i> Voltar
+        </button>
+        <a href="../index.html" class="btn-home-fixed">
+            <i class="fa-solid fa-house"></i> Início
+        </a>
+    </div>
+        <div class="container-legal">
+        <h1>ACORDO EDUCACIONAL</h1>
+        
+        <p><strong>PRESTADORA:</strong> UNIT - Unidade de Integração Tecnológica (Representada por Gustavo Albert Ferreira Capichoni). <br>
+        <strong>CONTATO TÉCNICO:</strong> unitacademy8@gmail.com</p>
+        <p><strong>CONTRATANTE:</strong> Cliente identificado pelos dados cadastrais preenchidos no checkout.</p>
+        <p><strong>DOCUMENTO ATUALIZADO EM:</strong> 02 de Janeiro de 2026</p>
+
+        <h2>1. OBJETO</h2>
+        <p>
+            O presente acordo regula o acesso aos treinamentos da plataforma <strong>UNIT Academy</strong>,
+            classificados como cursos livres, com foco em Inteligência Artificial, automação, programação
+            e arquitetura de soluções digitais.
+        </p>
+
+        <h2>2. NATUREZA EDUCACIONAL</h2>
+        <p>
+            A UNIT Academy <strong>não presta serviços personalizados</strong>, não executa projetos
+            para o aluno e não realiza consultorias individuais.
+        </p>
+        <p>
+            Todo o conteúdo disponibilizado tem caráter <strong>educacional e formativo</strong>,
+            cabendo ao aluno interpretar, aplicar e adaptar os conceitos conforme sua realidade.
+        </p>
+
+        <!-- NOVA CLÁUSULA DE ACESSO E DISPONIBILIDADE AQUI -->
+        <h2>3. ACESSO E DISPONIBILIDADE DO CONTEÚDO</h2>
+        <p>
+            <strong>3.1. Acesso Vitalício:</strong> Ao adquirir a Formação UNIT Academy (ou módulos avulsos), o Usuário terá acesso vitalício e ilimitado ao conteúdo adquirido, incluindo todas as atualizações relevantes que vierem a ser implementadas pela UNIT Academy, sem custos adicionais. Este acesso é garantido enquanto a Formação e/ou os módulos estiverem ativos e disponíveis na plataforma de hospedagem e distribuição oficial da UNIT Academy (Kiwify).
+        </p>
+        <p>
+            <strong>3.2. Suspensão ou Interrupção do Acesso:</strong>
+            <ol>
+                <li>A UNIT Academy se reserva o direito de suspender ou descontinuar o acesso ao conteúdo da Formação, total ou parcialmente, de forma temporária ou permanente, por razões técnicas, de segurança, legais, de mercado, ou em casos de força maior, sem que isso gere direito a reembolso ou indenização ao Usuário, exceto conforme previsto na cláusula 3.3.</li>
+                <li>A UNIT Academy envidará seus melhores esforços para comunicar previamente quaisquer suspensões ou descontinuações relevantes do acesso, sempre que possível.</li>
+            </ol>
+        </p>
+        <p>
+            <strong>3.3. Migração de Plataforma ou Descontinuação Integral do Produto:</strong>
+            <ol>
+                <li>Em caso de descontinuação total da Formação pela UNIT Academy ou de migração para uma nova plataforma de hospedagem, a UNIT Academy envidará seus melhores esforços para garantir a continuidade do acesso dos Usuários adimplentes ao conteúdo adquirido, sem custos adicionais para o Usuário no que tange à migração ou ao novo acesso.</li>
+                <li>Na eventualidade de um evento de força maior (como, mas não se limitando a, falência da plataforma de hospedagem, catástrofes naturais, guerras, ataques cibernéticos em larga escala ou outras circunstâncias extraordinárias e imprevisíveis que tornem impossível ou excessivamente onerosa a manutenção ou migração do conteúdo), que resulte na perda definitiva e irrecuperável do acesso à Formação, a UNIT Academy não poderá ser responsabilizada pela interrupção do acesso e não haverá obrigação de reembolso ou indenização, uma vez que tais eventos fogem ao controle razoável da UNIT Academy.</li>
+            </ol>
+        </p>
+
+        <div class="warning-box">
+            <h3>⚠️ 4. RESPONSABILIDADE DO ALUNO</h3>
+            <p>O aluno declara estar ciente de que:</p>
+            <ol>
+                <li>Os treinamentos não garantem resultados financeiros, profissionais ou comerciais.</li>
+                <li>Qualquer aplicação prática do conteúdo ocorre por conta e risco do próprio aluno.</li>
+                <li>O módulo de Robôs Traders possui caráter estritamente tecnológico e de programação. 
+                A UNIT não fornece recomendações de investimento (Call), análises de mercado ou indicações de 
+                compra e venda de ativos, atividades privativas de analistas credenciados (CNPI). O aluno é 100% 
+                responsável pela estratégia (setup) que configurar no robô.</li>
+                <li>A UNIT Academy não se responsabiliza por perdas, danos ou decisões tomadas a partir do conteúdo.</li>
+            </ol>
+        </div>
+
+        <h2>5. USO DE INTELIGÊNCIA ARTIFICIAL</h2>
+        <p>
+            Os treinamentos utilizam Inteligência Artificial como ferramenta estratégica de apoio.
+            O aluno reconhece que sistemas de IA podem gerar respostas imprecisas e que a responsabilidade
+            final pela validação técnica é sempre humana.
+        </p>
+
+        <h2>6. ACEITE ELETRÔNICO</h2>
+        <p>
+            Ao realizar a compra por meio da plataforma <strong>Kiwify</strong>, o aluno declara
+            ter lido, compreendido e aceitado integralmente este acordo educacional.
+        </p>
+
+        <div class="signature-area">
+            <p>Documento registrado digitalmente no ato da transação.</p>
+            <strong>Gustavo Albert Ferreira Capichoni</strong><br>
+            <span style="font-size: 0.85rem; color: var(--text-muted);">
+                Responsável Técnico · UNIT - Unidade de Integração Tecnológica
+            </span>
+        </div>
+
+        <div class="legal-docs-footer-nav">
+    <p>Documentos Legais da UNIT Academy:</p>
+    <ul>
+        <li><a href="acordo-de-servico.html">Acordo Educacional</a></li>
+        <li><a href="politica-de-privacidade.html">Política de Privacidade</a></li>
+        <li><a href="termos-de-uso.html">Termos de Uso</a></li>
+    </ul>
+</div>
+<div class="footer-legal">
+    UNIT - Unidade de Integração Tecnológica.<br>
+    Responsável Técnico: Gustavo Albert Ferreira Capichoni.<br>
+    Pagamentos e dados transacionais processados via Kiwify.
+</div>
+
+<style>
+    /* Estilo para a navegação entre documentos no footer */
+    .legal-docs-footer-nav {
+        margin-top: 40px;
+        padding-top: 20px;
+        border-top: 1px dashed var(--border-color); /* Linha tracejada para separar do conteúdo */
+        text-align: center;
+    }
+    .legal-docs-footer-nav p {
+        font-size: 0.85rem;
+        color: var(--text-muted);
+        margin-bottom: 10px;
+    }
+    .legal-docs-footer-nav ul {
+        list-style: none;
+        padding: 0;
+        display: flex;
+        justify-content: center;
+        gap: 20px; /* Espaço entre os links */
+        margin-bottom: 20px;
+    }
+    .legal-docs-footer-nav li a {
+        color: var(--primary); /* Cor principal (roxo) para os links */
+        text-decoration: none;
+        font-weight: 500;
+        font-size: 0.9rem;
+        transition: color 0.3s ease;
+    }
+    .legal-docs-footer-nav li a:hover {
+        color: var(--neon-blue); /* Cor neon azul ao passar o mouse */
+        text-decoration: underline;
+    }
+</style>
+    </div>
+</body>
+</html>

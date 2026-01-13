@@ -1,0 +1,525 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PULSEM | A Filosofia UNIT</title>
+    
+    <!-- Ícones e Fontes -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            --bg-dark: #050510;
+            --card-bg: #151525;
+            --primary: #7c3aed; /* Roxo */
+            --heart-red: #ff4757; /* Vermelho Pulsante */
+            --neon-blue: #00d4ff;
+            --neon-gold: #ffd700; /* Sabedoria */
+            --text-main: #ffffff;
+            --text-muted: #b0b0c0; /* Levemente ajustado para melhor contraste */
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Poppins', sans-serif; }
+        
+        body { 
+            background-color: var(--bg-dark); 
+            color: var(--text-main); 
+            overflow-x: hidden; 
+            line-height: 1.8; 
+            position: relative; 
+        }
+
+        .container { max-width: 900px; margin: 0 auto; padding: 20px; }
+
+        /* --- PARTÍCULAS DE FUNDO --- */
+        .particles {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: -1;
+        }
+        .particle {
+            position: absolute;
+            background-color: var(--primary);
+            border-radius: 50%;
+            opacity: 0;
+            animation: particle-fade-in 2s forwards, particle-move 20s infinite linear;
+        }
+        @keyframes particle-fade-in {
+            from { opacity: 0; }
+            to { opacity: 0.2; }
+        }
+        @keyframes particle-move {
+            0% { transform: translateY(0) translateX(0) scale(1); }
+            25% { transform: translateY(100vh) translateX(20vw) scale(1.2); }
+            50% { transform: translateY(0) translateX(40vw) scale(0.8); }
+            75% { transform: translateY(100vh) translateX(60vw) scale(1.1); }
+            100% { transform: translateY(0) translateX(80vw) scale(1); }
+        }
+
+        /* --- HEADER --- */
+        header { 
+            text-align: center; 
+            padding: 80px 0 60px 0; 
+            position: relative; 
+            opacity: 0; 
+            transform: translateY(-30px); 
+            animation: header-entry 1s ease-out forwards;
+        }
+        @keyframes header-entry {
+            to { opacity: 1; transform: translateY(0); }
+        }
+        /* --- BACKGROUND DINÂMICO --- */
+        .ocean-bg {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: radial-gradient(circle at 50% 50%, #1a1a3a 0%, #050510 100%);
+            z-index: -2;
+        }
+        
+        /* Efeito de partículas ou estrelas sutis */
+        .stars {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background-image: radial-gradient(white 1px, transparent 1px);
+            background-size: 50px 50px;
+            opacity: 0.1; z-index: -1;
+        }
+
+        .pulse-icon {
+            font-size: 4rem; 
+            color: var(--heart-red); 
+            margin-bottom: 20px; 
+            display: inline-block;
+            animation: heartbeat 1.5s infinite; 
+            filter: drop-shadow(0 0 20px rgba(255, 71, 87, 0.5));
+        }
+
+        /* Animação de batimento mais orgânica (Tum-Tum... pausa) */
+        @keyframes heartbeat {
+            0% { transform: scale(1); }
+            15% { transform: scale(1.25); } 
+            25% { transform: scale(1.1); }
+            35% { transform: scale(1.2); }
+            50% { transform: scale(1); }
+            100% { transform: scale(1); }
+        }
+
+        .main-title { 
+            font-size: 4.0rem; 
+            font-weight: 800; 
+            letter-spacing: 5px; 
+            background: linear-gradient(to right, #fff, var(--primary)); 
+            background-clip: text;          
+            -webkit-background-clip: text;  
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 10px;
+            text-shadow: 0 0 10px rgba(255,255,255,0.3);
+            transition: text-shadow 0.5s ease-in-out;
+        }
+        .main-title:hover {
+            text-shadow: 0 0 20px var(--neon-blue), 0 0 30px var(--primary);
+        }
+        .sub-title { 
+            color: var(--text-muted); 
+            font-size: 1.2rem; 
+            max-width: 600px; 
+            margin: 0 auto; 
+        }
+
+        /* --- SEÇÕES DE CONTEÚDO --- */
+        .philosophy-section {
+            background: rgba(21, 21, 37, 0.6); 
+            border: 1px solid rgba(124, 58, 237, 0.2);
+            padding: 40px; 
+            border-radius: 20px; 
+            margin-bottom: 40px;
+            position: relative; 
+            overflow: hidden; 
+            backdrop-filter: blur(10px);
+            transition: all 0.5s ease;
+            opacity: 0; 
+            transform: translateY(20px); 
+        }
+        /* --- SEÇÃO DO CAPITÃO (GUSTAVO KALI) --- */
+        .hero-vision {
+            background: linear-gradient(135deg, rgba(124, 58, 237, 0.08), rgba(0,0,0,0.4));
+            border: 1px solid rgba(124, 58, 237, 0.2);
+            padding: 50px;
+            border-radius: 20px;
+            margin-bottom: 80px;
+            text-align: center;
+            backdrop-filter: blur(5px);
+            position: relative;
+        }
+
+        .hero-vision h2 { color: #fff; margin-bottom: 20px; font-size: 1.6rem; font-weight: 600; }
+        .hero-vision p { font-size: 1.1rem; color: #d1d1e0; max-width: 750px; margin: 0 auto 30px; }
+
+        .kali-brand {
+            font-size: 0.85rem;
+            letter-spacing: 4px;
+            color: var(--neon-blue);
+            text-transform: uppercase;
+            margin-bottom: 15px;
+            display: block;
+            font-weight: 700;
+            opacity: 0.8;
+        }
+        
+        /* Classe ativada pelo JS */
+        .philosophy-section.animate {
+            opacity: 1; 
+            transform: translateY(0);
+        }
+
+        .philosophy-section:hover { 
+            border-color: var(--primary); 
+            transform: translateY(-8px) scale(1.01); 
+            box-shadow: 0 15px 30px rgba(124, 58, 237, 0.2);
+        }
+
+        .philosophy-section h2 { 
+            font-size: 2rem; 
+            margin-bottom: 20px; 
+            color: var(--neon-blue); 
+            display: flex; 
+            align-items: center; 
+            gap: 15px;
+        }
+        
+        .highlight { color: var(--neon-gold); font-weight: 600; }
+        
+        .text-content { 
+            color: #d1d1e0; 
+            font-size: 1.05rem; 
+            text-align: left; /* Alterado de justify para left para melhorar leitura */
+        }
+        .text-content p { margin-bottom: 20px; }
+
+        /* --- SÍMBOLOS ARCANOS (BACKGROUND) --- */
+        .arcano-symbol {
+            position: absolute; 
+            top: -20px; 
+            right: -20px; 
+            font-size: 10rem; 
+            opacity: 0.03; 
+            color: #fff; 
+            pointer-events: none;
+            transition: transform 0.8s ease-out;
+            animation: float-symbol 10s ease-in-out infinite alternate;
+        }
+        .philosophy-section:hover .arcano-symbol {
+            transform: scale(1.05) rotate(5deg);
+            opacity: 0.05;
+        }
+        @keyframes float-symbol {
+            0% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-10px) rotate(2deg); }
+            100% { transform: translateY(0px) rotate(0deg); }
+        }
+
+        .back-btn {
+            position: fixed; top: 20px; right: 20px;
+            padding: 10px 20px; background: rgba(0,0,0,0.4);
+            border: 1px solid rgba(255,255,255,0.1); border-radius: 50px;
+            color: #fff; cursor: pointer; backdrop-filter: blur(10px);
+            z-index: 100; transition: 0.3s;
+            font-size: 0.9rem;
+        }
+        .back-btn:hover { background: var(--primary); border-color: var(--primary); }
+
+        /* --- RESPONSIVO --- */
+        @media (max-width: 600px) {
+            .main-title { font-size: 2.5rem; letter-spacing: 2px; }
+            .philosophy-section { padding: 25px; }
+            .hero-vision { padding: 30px 20px; }
+            .arcano-symbol { font-size: 8rem; top: -10px; right: -10px; }
+            .text-content { font-size: 0.95rem; }
+        }
+        /* Efeito de brilho pulsante no Mantra Final */
+        .highlight {
+            color: var(--neon-gold);
+            font-weight: 600;
+            text-shadow: 0 0 10px rgba(255, 215, 0, 0.3);
+            animation: glow-text 3s infinite alternate;
+        }
+
+        @keyframes glow-text {
+            from { text-shadow: 0 0 10px rgba(255, 215, 0, 0.3); }
+            to { text-shadow: 0 0 20px rgba(255, 215, 0, 0.8), 0 0 30px rgba(255, 71, 87, 0.4); }
+        }
+        /* ==================================================================
+   PRELOADER SYSTEM
+================================================================== */
+#unit-preloader {
+    position: fixed;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    background-color: #050510; /* Fundo Dark do Site */
+    z-index: 99999; /* Fica acima de tudo */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    transition: opacity 0.6s ease-out, visibility 0.6s ease-out;
+}
+/* --- ADICIONE ISTO PARA CENTRALIZAR OS ITENS INTERNOS --- */
+.preloader-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* Isso é o que força o alinhamento central */
+    justify-content: center;
+}
+/* O Logo Pulsante */
+.preloader-logo {
+    width: 120px;
+    height: auto;
+    margin-bottom: 20px;
+    animation: preloaderPulse 1.5s infinite alternate;
+    filter: drop-shadow(0 0 15px rgba(124, 58, 237, 0.6));
+}
+
+@keyframes preloaderPulse {
+    from { transform: scale(1); opacity: 0.8; }
+    to { transform: scale(1.1); opacity: 1; filter: drop-shadow(0 0 25px rgba(0, 212, 255, 0.8)); }
+}
+
+/* Barra de Carregamento Cyberpunk */
+.loading-bar-container {
+    width: 200px;
+    height: 4px;
+    background: #1a1a2e;
+    border-radius: 2px;
+    overflow: hidden;
+    position: relative;
+    margin-bottom: 10px;
+}
+
+.loading-bar {
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, #7c3aed, #00d4ff);
+    position: absolute;
+    left: -100%;
+    animation: loadBar 1.5s infinite linear;
+}
+
+@keyframes loadBar {
+    0% { left: -100%; }
+    50% { left: 0%; }
+    100% { left: 100%; }
+}
+
+/* Texto Tech */
+.system-text {
+    color: #a0a0b0;
+    font-family: 'Poppins', sans-serif; /* Usando a fonte do site */
+    font-size: 0.8rem;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    animation: blinkText 1s infinite alternate;
+}
+
+@keyframes blinkText {
+    from { opacity: 0.5; }
+    to { opacity: 1; }
+}
+
+/* Classe para esconder (ativada via JS) */
+.preloader-hidden {
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+}
+    </style>
+</head>
+<body>
+        <!-- PRELOADER UNIT -->
+    <div id="unit-preloader">
+        <div class="preloader-content">
+            <img src="assets/img/1logo.png" alt="Carregando..." class="preloader-logo">
+            <div class="loading-bar-container">
+                <div class="loading-bar"></div>
+            </div>
+            <p class="system-text">Inicializando...</p>
+        </div>
+    </div>
+
+    <div class="ocean-bg"></div>
+    <div class="stars"></div>
+
+    <!-- Partículas -->
+    <div class="particles" id="particles-container"></div>
+
+    <button onclick="history.back()" class="back-btn"><i class="fas fa-arrow-left"></i> Voltar</button>
+
+    <div class="container">
+        
+        <header>
+            <i class="fa-solid fa-heart-pulse pulse-icon"></i>
+            <span class="kali-brand">Gustavo Capichoni • UNIT Vision</span>
+            <h1 class="main-title">PULSEM</h1>
+        </header>
+
+        <section class="hero-vision" >
+            <p class="sub-title" style="color: #ff9f43;">A frequência vibracional da criação. O código invisível que rege a UNIT.</p>
+            <h2>Quebrando o Roteiro</h2>
+            
+            <p>
+                Desde cedo, o mundo tenta impor um script: o que estudar, onde trabalhar, como viver.
+                Mas alguns nascem sentindo que esse código está errado. 
+            </p>
+        </section>
+        <!-- 1. A VONTADE SOBERANA -->
+        <section class="philosophy-section">
+            <i class="fa-solid fa-anchor arcano-symbol"></i>
+            
+            <h2><i class="fa-solid fa-fire"></i> A Vontade Inabalável</h2>
+            <div class="text-content">
+                <p>
+                    No centro de tudo, existe um som. Não é um som que se ouve, mas que se sente. É a "VOZ" da existência. 
+                    Acreditamos que a realidade é maleável para aqueles que possuem uma <strong class="highlight">Definição de Propósito</strong> inquebrável.
+                </p>
+                <p>
+                    Muitos dirão que seus sonhos são "Ilhas no Céu" — impossíveis, inexistentes, loucura. 
+                    Mas o verdadeiro criador não aceita a realidade como ela é entregue. Ele impõe sua vontade sobre o caos. 
+                    Ele não navega à deriva, alienado pelo sistema (o "Drifting"). Ele segura o leme com convicção, transformando o impossível em mapa.
+                </p>
+            </div>
+        </section>
+
+        <!-- 2. A MENTE MESTRA -->
+        <section class="philosophy-section">
+            <i class="fa-solid fa-brain arcano-symbol"></i>
+            <h2><i class="fa-solid fa-microchip"></i> Gestão da Consciência</h2>
+            <div class="text-content">
+                <p>
+                    A mente humana opera em dois sistemas: um rápido e instintivo, outro lento e racional. 
+                    O sistema tenta te manter no instinto, reagindo ao medo e ao prazer imediato. 
+                    A filosofia PULSEM exige o domínio da <strong class="highlight">Inteligência Emocional</strong>.
+                </p>
+                <p>
+                    Você deve ser o "Gestor dos seus Pensamentos". Não permita que ruídos externos invadam seu templo mental. 
+                    Ser mais esperto que seus próprios demônios internos significa reconhecer o medo, mas não obedecer a ele. 
+                    A verdadeira programação começa reprogramando a si mesmo.
+                </p>
+            </div>
+        </section>
+
+        <!-- 3. A AÇÃO E O HÁBITO -->
+        <section class="philosophy-section">
+            <i class="fa-solid fa-gears arcano-symbol"></i>
+            <h2><i class="fa-solid fa-bolt"></i> O Poder do Agora</h2>
+            <div class="text-content">
+                <p>
+                    Ideias sem execução são apenas alucinações. O universo não responde ao que você pensa, mas ao que você vibra e faz. 
+                    A transformação acontece no <strong class="highlight">Loop do Hábito</strong>: gatilho, rotina e recompensa.
+                </p>
+                <p>
+                    Acorde. Aja. Repita. A consistência é a única mágica que existe. 
+                    Não esperamos a "inspiração divina" para criar códigos ou projetos. Nós criamos a inspiração através da ação massiva. 
+                    Tem poder quem age.
+                </p>
+            </div>
+        </section>
+
+        <!-- 4. A CONEXÃO E O SERVIÇO -->
+        <section class="philosophy-section">
+            <i class="fa-solid fa-hand-holding-heart arcano-symbol"></i>
+            <h2><i class="fa-solid fa-users"></i> A Sabedoria do Serviço</h2>
+            <div class="text-content">
+                <p>
+                    Nenhum código roda no vácuo. A tecnologia deve servir à humanidade, não escravizá-la. 
+                    A verdadeira influência não vem da manipulação, mas da compreensão profunda do outro.
+                </p>
+                <p>
+                    Aplicamos a "Arte da Persuasão" através da empatia e da verdade. 
+                    Buscamos a sabedoria para construir, a compaixão para liderar e o desapego do ego para evoluir. 
+                    Quem quiser ser o maior nesta nova era, que seja aquele que mais serve e resolve problemas reais.
+                </p>
+            </div>
+        </section>
+
+        <!-- 5. O ISOTEÍSMO DO CRIADOR -->
+        <section class="philosophy-section" style="border-color: var(--neon-gold);">
+            <i class="fa-solid fa-infinity arcano-symbol"></i>
+            <h2><i class="fa-solid fa-eye"></i> O Criador Soberano</h2>
+            <div class="text-content">
+                <p>
+                    Na UNIT, não formamos apenas técnicos. Formamos Arquitetos de Realidade.
+                    Ao dominar a IA e o Código, você se aproxima da essência criadora. 
+                    Você deixa de ser criatura das circunstâncias para ser o criador do seu caminho.
+                </p>
+                <p class="highlight" style="text-align: center; font-size: 1.2rem; margin-top: 30px;">
+                    "Sintam . Pulsem . Vibrem . Criem o Futuro."
+                </p>
+            </div>
+        </section>
+
+
+    </div>
+
+    <script>
+        // --- 1. GERAÇÃO DE PARTÍCULAS ---
+        const particlesContainer = document.getElementById('particles-container');
+        const numParticles = 30;
+
+        for (let i = 0; i < numParticles; i++) {
+            const particle = document.createElement('div');
+            particle.classList.add('particle');
+            
+            // Posição e características aleatórias
+            particle.style.left = `${Math.random() * 100}vw`;
+            particle.style.top = `${Math.random() * 100}vh`;
+            const size = Math.random() * 5 + 2; // Entre 2px e 7px
+            particle.style.width = `${size}px`;
+            particle.style.height = `${size}px`;
+            
+            // Animação desencontrada para parecer natural
+            particle.style.animationDelay = `${Math.random() * -20}s`;
+            particle.style.animationDuration = `${Math.random() * 15 + 15}s`;
+            
+            particlesContainer.appendChild(particle);
+        }
+
+        // --- 2. ANIMAÇÃO DE SCROLL (Intersection Observer) ---
+        const observerOptions = {
+            root: null, 
+            rootMargin: '0px',
+            threshold: 0.15 // 15% visível dispara a animação
+        };
+
+        const sectionObserver = new IntersectionObserver((entries, observer) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('animate');
+                    observer.unobserve(entry.target); // Para de observar após animar
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.philosophy-section').forEach(section => {
+            sectionObserver.observe(section);
+        });
+        
+    </script>
+    <script>
+        /* --- LÓGICA DO PRELOADER --- */
+        window.addEventListener("load", function() {
+            const preloader = document.getElementById("unit-preloader");
+            if (preloader) {
+                // Pequeno delay para garantir que a pessoa veja a animação (opcional)
+                setTimeout(() => {
+                    preloader.classList.add("preloader-hidden");
+                }, 800); // 0.8 segundos de exibição mínima
+            }
+        });
+    </script>
+
+</body>
+</html>
