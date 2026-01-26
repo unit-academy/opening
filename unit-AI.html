@@ -2,22 +2,21 @@
 <html lang="pt-br">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>IA da Turma - Tira Dúvidas</title>
     
-    <!-- 1. PROTEÇÃO CSP (Content Security Policy) -->
-    <!-- Permite scripts apenas do próprio site e do CDN (jsdelivr) para as bibliotecas de markdown -->
+    <!-- CSP -->
     <meta http-equiv="Content-Security-Policy" content="default-src 'self'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; script-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net; connect-src 'self';">
 
-    <!-- Importando a fonte Poppins -->
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
     
-    <!-- 3. BIBLIOTECAS PARA MARKDOWN (Marked) E SEGURANÇA (DOMPurify) -->
+    <!-- Libs -->
     <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/dompurify/dist/purify.min.js"></script>
 
     <style>
-        /* --- DESIGN SYSTEM: ESTILO GOOGLE AI STUDIO / GEMINI --- */
+        /* --- DESIGN SYSTEM --- */
         :root {
             --bg-app: #131314;
             --bg-surface: #1E1F20;
@@ -35,7 +34,8 @@
         body { 
             background-color: var(--bg-app); 
             color: var(--text-main); 
-            height: 100vh; 
+            height: 100vh;
+            height: 100dvh; 
             display: flex; 
             flex-direction: column;
             overflow: hidden;
@@ -45,156 +45,159 @@
         /* --- HEADER --- */
         header {
             background-color: var(--bg-app);
-            padding: 18px 25px;
+            padding: 15px 20px;
             display: flex;
             justify-content: space-between;
             align-items: center;
+            flex-shrink: 0;
         }
 
-        .logo-area { display: flex; align-items: center; gap: 12px; }
-        .logo-img { height: 28px; width: auto; opacity: 0.9; }
-        .logo-text { font-size: 1.1rem; font-weight: 500; color: #fff; letter-spacing: 0.5px; }
+        .logo-area { display: flex; align-items: center; gap: 10px; }
+        .logo-img { height: 26px; width: auto; opacity: 0.9; }
+        .logo-text { font-size: 1.1rem; font-weight: 500; color: #fff; }
         .logo-text span { color: var(--primary-accent); font-weight: 600; }
 
         .btn-new-chat {
             background: #2D2E31; border: none; color: var(--text-main);
-            padding: 8px 16px; border-radius: 8px; font-weight: 500;
+            padding: 8px 12px; border-radius: 8px; font-weight: 500;
             font-size: 0.85rem; cursor: pointer; transition: 0.2s;
-            display: flex; align-items: center; gap: 8px;
+            display: flex; align-items: center; gap: 6px;
         }
         .btn-new-chat:hover { background: #3c3d40; color: #fff; }
 
         .limit-warning {
             background: #372827; color: var(--danger); text-align: center;
-            padding: 6px; font-size: 0.75rem; border-bottom: 1px solid #5a302d;
+            padding: 6px 10px; font-size: 0.75rem; border-bottom: 1px solid #5a302d;
+            flex-shrink: 0;
         }
 
         /* --- CHAT AREA --- */
         .main-chat-area {
             flex: 1; display: flex; flex-direction: column; overflow: hidden;
-            background: var(--bg-app); max-width: 900px; width: 100%; margin: 0 auto;
+            background: var(--bg-app); 
+            width: 100%; max-width: 900px; 
+            margin: 0 auto;
         }
 
         .chat-messages {
             flex: 1; overflow-y: auto; padding: 20px;
-            display: flex; flex-direction: column; gap: 30px;
+            display: flex; flex-direction: column; gap: 25px;
             scroll-behavior: smooth;
+            -webkit-overflow-scrolling: touch;
         }
-        .chat-messages::-webkit-scrollbar { width: 8px; }
+
+        .chat-messages::-webkit-scrollbar { width: 6px; }
         .chat-messages::-webkit-scrollbar-track { background: transparent; }
-        .chat-messages::-webkit-scrollbar-thumb { background: #444746; border-radius: 4px; }
+        .chat-messages::-webkit-scrollbar-thumb { background: #444746; border-radius: 3px; }
 
         .msg-wrapper {
-            display: flex; gap: 18px; max-width: 100%;
+            display: flex; gap: 12px; max-width: 85%; 
             animation: fadeIn 0.3s ease; line-height: 1.6;
         }
         @keyframes fadeIn { from { opacity: 0; transform: translateY(5px); } to { opacity: 1; transform: translateY(0); } }
 
         .avatar {
-            width: 30px; height: 30px; border-radius: 50%;
+            width: 28px; height: 28px; border-radius: 50%;
             display: flex; align-items: center; justify-content: center;
-            flex-shrink: 0; font-size: 0.75rem; font-weight: 600;
+            flex-shrink: 0; font-size: 0.7rem; font-weight: 600; margin-top: 2px;
         }
         .avatar.ai { background: linear-gradient(135deg, #4285F4, #9B72CB); color: #fff; }
         .avatar.user { background: #444746; color: #fff; }
 
         .msg-bubble {
             font-size: 1rem; color: var(--text-main); position: relative;
-            /* Garante que o texto quebre linha e não estoure */
-            overflow-wrap: break-word; 
-            max-width: 100%;
+            overflow-wrap: break-word; word-break: break-word; min-width: 0;
         }
 
-        .ai .msg-bubble { background: transparent; border: none; padding: 2px 0; width: 100%; }
+        .ai .msg-bubble { background: transparent; border: none; padding: 0; width: 100%; }
         
-        .user { flex-direction: row-reverse; }
+        .user { align-self: flex-end; flex-direction: row-reverse; }
         .user .msg-bubble {
-            background: var(--user-bubble); padding: 12px 20px;
-            border-radius: 18px; border-top-right-radius: 4px;
+            background: var(--user-bubble); padding: 10px 16px;
+            border-radius: 18px; border-top-right-radius: 2px;
         }
 
-        /* --- ESTILOS DO MARKDOWN (GERADO PELA IA) --- */
-        /* Isso faz o texto da IA ficar formatado corretamente */
-        .msg-bubble p { margin-bottom: 10px; }
+        .msg-bubble p { margin-bottom: 8px; }
         .msg-bubble p:last-child { margin-bottom: 0; }
         .msg-bubble strong { color: #fff; font-weight: 700; }
-        .msg-bubble em { font-style: italic; color: var(--primary-accent); }
-        .msg-bubble ul, .msg-bubble ol { margin-left: 20px; margin-bottom: 10px; }
-        .msg-bubble li { margin-bottom: 4px; }
-        
-        /* Blocos de código */
+        .msg-bubble ul, .msg-bubble ol { margin-left: 20px; margin-bottom: 8px; }
         .msg-bubble pre {
-            background: #28292C; padding: 15px; border-radius: 8px;
-            overflow-x: auto; margin: 10px 0; border: 1px solid #444746;
+            background: #28292C; padding: 12px; border-radius: 8px;
+            overflow-x: auto; margin: 8px 0; border: 1px solid #444746;
         }
         .msg-bubble code {
-            font-family: 'Consolas', 'Courier New', monospace;
-            background: rgba(255,255,255,0.1); padding: 2px 6px; border-radius: 4px; font-size: 0.9em;
+            font-family: 'Consolas', monospace;
+            background: rgba(255,255,255,0.1); padding: 2px 5px; border-radius: 4px; font-size: 0.85em;
         }
-        .msg-bubble pre code {
-            background: transparent; padding: 0; color: #A8C7FA;
+        .msg-bubble pre code { background: transparent; padding: 0; color: #A8C7FA; }
+
+        /* --- INPUT AREA (CORRIGIDA) --- */
+        .input-area {
+            padding: 15px 20px 30px 20px; 
+            background: var(--bg-app);
+            display: flex; justify-content: center;
+            flex-shrink: 0; width: 100%;
         }
 
-        /* --- INPUT AREA --- */
-        .input-area {
-            padding: 20px 20px 40px 20px; background: var(--bg-app);
-            display: flex; justify-content: center;
-        }
+        .input-wrapper-limit { width: 100%; max-width: 800px; }
 
         .input-box {
-            width: 100%; max-width: 800px; background: var(--bg-input);
-            border: 1px solid transparent; border-radius: 28px;
-            padding: 10px 10px 10px 25px; display: flex; align-items: center;
+            background: var(--bg-input);
+            border: 1px solid transparent; border-radius: 24px;
+            /* Padding ajustado para dar respiro */
+            padding: 12px 10px 12px 20px; 
+            /* Flex-end garante que o botão fique em baixo se o texto crescer */
+            display: flex; align-items: flex-end; 
             transition: 0.2s;
         }
-
-        /* Estilo visual quando está desativado (aguardando resposta) */
         .input-box.disabled { opacity: 0.6; cursor: not-allowed; }
-
-        .input-box:focus-within {
-            background: #303134; border-color: rgba(255,255,255,0.1); 
-            box-shadow: 0 4px 10px rgba(0,0,0,0.2);
-        }
+        .input-box:focus-within { background: #303134; box-shadow: 0 4px 12px rgba(0,0,0,0.3); }
 
         textarea {
             flex: 1; background: transparent; border: none; color: #fff;
-            font-size: 1rem; resize: none; height: 24px; max-height: 150px; outline: none;
+            font-size: 1rem; resize: none; outline: none;
+            
+            /* Correções de Alinhamento */
+            padding: 0; /* Remove padding interno para não brigar com altura */
+            height: 24px; 
+            line-height: 24px; /* Centraliza o texto na altura da linha */
+            max-height: 120px;
+            margin-bottom: 4px; /* Pequeno ajuste para alinhar opticamente com o botão */
         }
-        textarea::placeholder { color: #8E9196; }
         
-        /* Botão Enviar e Estados */
         .send-btn {
             background: #fff; color: #000; border: none;
-            width: 36px; height: 36px; border-radius: 50%;
+            width: 32px; height: 32px; border-radius: 50%;
             cursor: pointer; display: flex; align-items: center; justify-content: center;
-            margin-left: 10px; transition: 0.2s;
+            margin-left: 10px; transition: 0.2s; 
+            margin-bottom: 0; /* Reseta margem */
         }
-        .send-btn:hover:not(:disabled) { background: #dcdcdc; transform: scale(1.05); }
-        
-        /* Botão desativado */
-        .send-btn:disabled {
-            background: #555; color: #888; cursor: not-allowed; transform: none;
-        }
+        .send-btn:hover:not(:disabled) { transform: scale(1.05); }
+        .send-btn:disabled { background: #555; color: #888; }
 
         .disclaimer {
             text-align: center; font-size: 0.7rem; color: var(--text-muted);
-            padding-top: 12px; font-weight: 300;
+            padding-top: 10px; font-weight: 300;
         }
 
         /* Loading Dots */
         .typing-dots span {
-            display: inline-block; width: 5px; height: 5px;
+            display: inline-block; width: 4px; height: 4px;
             background: var(--text-main); border-radius: 50%;
-            animation: typing 1.4s infinite ease-in-out both; margin: 0 2px; opacity: 0.7;
+            animation: typing 1.4s infinite ease-in-out both; margin: 0 2px;
         }
         .typing-dots span:nth-child(1) { animation-delay: -0.32s; }
         .typing-dots span:nth-child(2) { animation-delay: -0.16s; }
         @keyframes typing { 0%, 80%, 100% { transform: scale(0); } 40% { transform: scale(1); } }
 
+        /* Media Queries */
         @media (max-width: 768px) {
-            .msg-wrapper { max-width: 100%; }
-            .btn-new-chat span { display: none; } 
-            header { padding: 15px; }
+            body { font-size: 14px; }
+            header { padding: 12px 15px; }
+            .btn-new-chat span { display: none; }
+            .chat-messages { padding: 15px; gap: 20px; }
+            .msg-wrapper { max-width: 95%; }
+            .input-area { padding: 10px 15px 15px 15px; }
         }
     </style>
 </head>
@@ -202,7 +205,7 @@
 
     <header>
         <div class="logo-area">
-            <img src="assets/img/1logo.png" alt="Logo Unit AI" class="logo-img">
+            <img src="assets/img/1logo.png" alt="Logo" class="logo-img">
             <div class="logo-text">UNIT <span>AI</span></div>
         </div>
         <button class="btn-new-chat" onclick="location.reload()">
@@ -212,7 +215,7 @@
     </header>
 
     <div class="limit-warning">
-        <span>⚠️ <b>Aviso:</b> Limite de 30 perguntas por minuto para a turma toda. Se travar, aguarde um pouco.</span>
+        <span>⚠️ <b>Aviso:</b> Limite de 30 perguntas/min (Turma).</span>
     </div>
 
     <main class="main-chat-area">
@@ -220,23 +223,23 @@
             <div class="msg-wrapper ai">
                 <div class="avatar ai">IA</div>
                 <div class="msg-bubble">
-                    Olá! Sou a Inteligência Artificial da turma. <br>
-                    Estou pronta para ajudar com suas dúvidas.
+                    Olá! Sou a IA da turma. <br>
+                    Estou pronta para tirar suas dúvidas.
                 </div>
             </div>
         </div>
     </main>
 
     <div class="input-area">
-        <div style="width: 100%; max-width: 900px;">
-            <!-- Adicionei ID no container do input para facilitar o estilo 'disabled' -->
+        <div class="input-wrapper-limit">
             <div class="input-box" id="inputBoxContainer">
+                <!-- Rows=1 é importante para altura inicial correta -->
                 <textarea id="userInput" placeholder="Digite sua dúvida aqui..." rows="1" oninput="autoResize(this)"></textarea>
                 <button class="send-btn" id="sendBtn">
-                    <svg stroke="currentColor" fill="none" stroke-width="2" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round" height="20" width="20" xmlns="http://www.w3.org/2000/svg"><line x1="22" y1="2" x2="11" y2="13"></line><polygon points="22 2 15 22 11 13 2 9 22 2"></polygon></svg>
+                    <svg stroke="currentColor" fill="none" stroke-width="2" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round" height="18" width="18" xmlns="http://www.w3.org/2000/svg"><line x1="22" y1="2" x2="11" y2="13"></line><polygon points="22 2 15 22 11 13 2 9 22 2"></polygon></svg>
                 </button>
             </div>
-            <p class="disclaimer">UNIT AI pode cometer erros. Verifique informações importantes.</p>
+            <p class="disclaimer">UNIT AI pode cometer erros. Verifique info importantes.</p>
         </div>
     </div>
 
@@ -249,12 +252,15 @@
         const inputBoxContainer = document.getElementById('inputBoxContainer');
 
         function autoResize(textarea) {
-            textarea.style.height = 'auto';
+            textarea.style.height = 'auto'; // Reseta para calcular corretamente
             textarea.style.height = textarea.scrollHeight + 'px';
-            if(textarea.value === '') textarea.style.height = '24px';
+            
+            // Se estiver vazio, força a altura mínima de 24px
+            if(textarea.value === '') {
+                textarea.style.height = '24px';
+            }
         }
 
-        // Função para alternar o estado de "Carregando" (Anti-Flood)
         function setLoadingState(isLoading) {
             if (isLoading) {
                 userInput.disabled = true;
@@ -264,7 +270,7 @@
                 userInput.disabled = false;
                 sendBtn.disabled = false;
                 inputBoxContainer.classList.remove('disabled');
-                userInput.focus(); // Devolve o foco para digitar de novo
+                userInput.focus();
             }
         }
 
@@ -283,13 +289,9 @@
                 bubble.innerHTML = '<div class="typing-dots"><span></span><span></span><span></span></div>';
             } 
             else if (sender === 'user') {
-                // Usuário: Apenas texto puro (para evitar injeção de código pelo usuário)
                 bubble.innerText = text;
             } 
             else {
-                // IA: Renderiza Markdown com segurança
-                // 1. marked.parse converte **texto** para <b>texto</b>
-                // 2. DOMPurify.sanitize remove scripts maliciosos
                 bubble.innerHTML = DOMPurify.sanitize(marked.parse(text));
             }
 
@@ -300,7 +302,6 @@
                 wrapper.appendChild(avatar);
                 wrapper.appendChild(bubble);
             }
-            
             return wrapper;
         }
 
@@ -308,14 +309,12 @@
             const text = userInput.value.trim();
             if (!text) return;
 
-            // 1. Exibe msg do usuário
             chatContainer.appendChild(createMessageElement(text, 'user'));
             userInput.value = '';
-            userInput.style.height = '24px';
+            userInput.style.height = '24px'; // Reseta altura do input
             scrollToBottom();
 
-            // 2. Ativa proteção Anti-Flood e exibe Loading
-            setLoadingState(true); // <--- TRAVA TUDO
+            setLoadingState(true);
             const loadingWrapper = createMessageElement('thinking_dots', 'ai');
             chatContainer.appendChild(loadingWrapper);
             scrollToBottom();
@@ -333,26 +332,17 @@
                 }
 
                 const data = await response.json();
+                if (chatContainer.contains(loadingWrapper)) chatContainer.removeChild(loadingWrapper);
 
-                // Remove loading
-                if (chatContainer.contains(loadingWrapper)) {
-                    chatContainer.removeChild(loadingWrapper);
-                }
-
-                // Exibe resposta da IA (formatada via marked.js na função createMessageElement)
                 const respostaIA = data.choices[0].message.content;
                 chatContainer.appendChild(createMessageElement(respostaIA, 'ai'));
 
             } catch (error) {
-                if (chatContainer.contains(loadingWrapper)) {
-                    chatContainer.removeChild(loadingWrapper);
-                }
+                if (chatContainer.contains(loadingWrapper)) chatContainer.removeChild(loadingWrapper);
                 console.error(error);
-                // Exibe erro amigável
-                chatContainer.appendChild(createMessageElement("⚠️ Ocorreu um erro ao conectar. Tente novamente.", 'ai'));
+                chatContainer.appendChild(createMessageElement("⚠️ Erro de conexão. Tente novamente.", 'ai'));
             } finally {
-                // 3. Libera o chat novamente, independente se deu erro ou sucesso
-                setLoadingState(false); // <--- DESTRAVA TUDO
+                setLoadingState(false);
                 scrollToBottom();
             }
         }
@@ -365,10 +355,7 @@
         userInput.addEventListener('keydown', (e) => {
             if (e.key === 'Enter' && !e.shiftKey) {
                 e.preventDefault();
-                // Só envia se não estiver travado
-                if (!sendBtn.disabled) {
-                    sendMessage();
-                }
+                if (!sendBtn.disabled) sendMessage();
             }
         });
     </script>
